@@ -4,10 +4,21 @@ const resolvers = {
     tracksForHome: (_, __, { dataSources }) => {
       return dataSources.trackAPI.getTracksForHome();
     },
+    // get a single track by ID, for the track page
+    track: (_, { id }, { dataSources }) => {
+      return dataSources.trackAPI.getTrack(id);
+    },
   },
   Track: {
     author: ({ authorId }, _, { dataSources }) => {
       return dataSources.trackAPI.getAuthor(authorId);
+    },
+    // the id is trackId coming from the parent, Track. thats why
+    // its under the property Track inside the resolvers object
+    // same as the authorId from the Track.
+    // read more on resolver chains
+    modules: ({ id }, _, { dataSources }) => {
+      return dataSources.trackAPI.getTrackModules(id);
     },
   },
 };
